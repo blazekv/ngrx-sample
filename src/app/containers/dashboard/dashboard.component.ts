@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {Decrement, Increment, Reset} from 'src/app/store/action/counter.actions';
+import {Decrement, Increment, Load, Reset, Save} from 'src/app/store/action/counter.actions';
 import {State} from 'src/app/store/reducers';
 import {Observable} from 'rxjs';
 
@@ -13,14 +13,20 @@ export class DashboardComponent implements OnInit {
 
 
   value$: Observable<number>;
+  loading$: Observable<boolean>;
 
 
   constructor(private store: Store<State>) {
     this.value$ = this.store.pipe(select('counter', 'value'));
+    this.loading$ = this.store.pipe(select('counter', 'loading'));
   }
 
   ngOnInit() {
+    this.store.dispatch(new Load());
+  }
 
+  save() {
+    this.store.dispatch(new Save());
   }
 
   onIncrement() {

@@ -2,11 +2,14 @@
 
 <div class="content">
   <app-counter
+          *ngIf="!(loading$ | async)"
           [value]="value$ | async"
           (decrement)="onDecrement()"
           (increment)="onIncrement()"
           (reset)="onReset()"
   >
   </app-counter>
+  <button mat-raised-button color="accent" (click)="save()">Save</button>
+  <mat-spinner *ngIf="loading$ | async"></mat-spinner>
 </div>
 
